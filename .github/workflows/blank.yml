@@ -16,53 +16,30 @@ jobs:
       - run: mkdir download
       
 #       # download libtorch
-#       - uses: actions/cache@v2
-#         id: libtorch-unzip-cache
-#         with:
-#           key: libtorch-unzip-cache
-#           path: download/libtorch
+      - uses: actions/cache@v2
+        id: libtorch-unzip-cache
+        with:
+          key: libtorch-unzip-cache
+          path: download/libtorch
           
-#       - if: steps.libtorch-unzip-cache.outputs.cache-hit != 'true'
-#         run: |
-#           Invoke-WebRequest https://download.pytorch.org/libtorch/cu111/libtorch-win-shared-with-deps-1.9.0%2Bcu111.zip -OutFile download/libtorch.zip
-#           Expand-Archive -Path download/libtorch.zip -DestinationPath download/
+      - if: steps.libtorch-unzip-cache.outputs.cache-hit != 'true'
+        run: |
+          Invoke-WebRequest https://download.pytorch.org/libtorch/cu111/libtorch-win-shared-with-deps-1.9.0%2Bcu111.zip -OutFile download/libtorch.zip
+          Expand-Archive -Path download/libtorch.zip -DestinationPath download/
       
-#       # download cuda
-#       - uses: actions/cache@v2
-#         id: download-cuda-cache
-#         with:
-#           key: download-cuda-cache
-#           path: download/cuda.exe
-          
-#       - if: steps.download-cuda-cache.outputs.cache-hit != 'true'
-#         run: |
-#           Invoke-WebRequest https://developer.download.nvidia.com/compute/cuda/11.1.1/local_installers/cuda_11.1.1_456.81_win10.exe -OutFile download/cuda.exe
-      
-#       - run: download/cuda.exe -s
-      
-#       - run: |
-#           ls download/
-#           ls 'C:\Program Files\'
-      
+      # CUDA
       - uses: Jimver/cuda-toolkit@v0.2.4
         id: cuda-toolkit
         with:
           method: network
           cuda: '11.1.1'
 
-      - run: |
-          echo "Installed cuda version is: ${{steps.cuda-toolkit.outputs.cuda}}"
+      # Build
+      - name: build
+        run: |
+          cmake -DCMAKE_PREFIX_PATH=download/libtorch .
+          cmake --build . --config Release
 
-      - run: |
-          echo "Cuda install location: ${{steps.cuda-toolkit.outputs.CUDA_PATH}}"
-
-      - run: nvcc -V
-      
-#       - name: build
-#         run: |
-#           cmake -DCMAKE_PREFIX_PATH=download/libtorch .
-#           cmake --build . --config Release
-
-#       - name: run
-#         run: |
-#           Release/check.exe
+      - name: run
+        run: |
+          Release/check.exe
