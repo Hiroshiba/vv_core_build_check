@@ -10,11 +10,20 @@ jobs:
     runs-on: windows-latest
 
     steps:
-      - run: |
-          Invoke-WebRequest https://www.google.com -OutFile output.txt
+      - uses: actions/cache@v2
+        id: hoge-cache
+        with:
+          key: hoge-cache
+          path: hoge-cache/
+
+      - if: steps.hoge-cache.outputs.cache-hit != 'true'
+        run: |
+          mkdir hoge-cache
+          Invoke-WebRequest https://www.google.com -OutFile hoge-cache/output.txt
 
       - run: |
-          cat output.txt
+          cat hoge-cache/output.txt
+
 
 #       - uses: actions/checkout@v2
 #       - uses: ilammy/msvc-dev-cmd@v1
