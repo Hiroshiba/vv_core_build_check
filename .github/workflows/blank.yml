@@ -20,4 +20,4 @@ jobs:
 
       - name: run
         run: |
-          ./check.exe
+          build/Release/check.exe
