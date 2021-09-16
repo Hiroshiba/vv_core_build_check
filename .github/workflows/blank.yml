@@ -10,14 +10,20 @@ jobs:
     runs-on: windows-latest
 
     steps:
-      - uses: actions/checkout@v2
-      - uses: ilammy/msvc-dev-cmd@v1
-      
-      - name: build
-        run: |
-          cmake -DCMAKE_PREFIX_PATH=/absolute/path/to/libtorch .
-          cmake --build . --config Release
+      - run: |
+          Invoke-WebRequest https://www.google.com -OutFile output.txt
 
-      - name: run
-        run: |
-          Release/check.exe
+      - run: |
+          cat output.txt
+
+#       - uses: actions/checkout@v2
+#       - uses: ilammy/msvc-dev-cmd@v1
+      
+#       - name: build
+#         run: |
+#           cmake -DCMAKE_PREFIX_PATH=/absolute/path/to/libtorch .
+#           cmake --build . --config Release
+
+#       - name: run
+#         run: |
+#           Release/check.exe
