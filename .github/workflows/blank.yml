@@ -49,7 +49,7 @@ jobs:
 
       - shell: bash
         run: |
-          cp -r download/cudnn/cuda ${{steps.cuda-toolkit.outputs.CUDA_PATH}}
+          cp -r download/cudnn/cuda/* ${{steps.cuda-toolkit.outputs.CUDA_PATH}}
           ls ${{steps.cuda-toolkit.outputs.CUDA_PATH}}
 
       # Build
