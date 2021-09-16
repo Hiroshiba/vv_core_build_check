@@ -34,18 +34,19 @@ jobs:
 #           cuda: '11.1.1'
 
       # CUDNN
-#       - uses: actions/cache@v2
-#         id: libtorch-unzip-cache
-#         with:
-#           key: libtorch-unzip-cache
-#           path: download/libtorch
+      - uses: actions/cache@v2
+        id: cudnn-unzip-cache
+        with:
+          key: cudnn-unzip-cache
+          path: download/cudnn
           
-      - shell: bash
+      - if: steps.cudnn-unzip-cache.outputs.cache-hit != 'true'
+        shell: bash
         run: |
           curl https://developer.download.nvidia.com/compute/redist/cudnn/v8.0.5/cudnn-11.1-windows-x64-v8.0.5.39.zip \
             > download/cudnn.zip
-          unzip download/cudnn.zip -d download/
-          ls download
+          unzip download/cudnn.zip -d download/cudnn
+          ls download/cudnn
       
 #       - run: |
 #           echo "Cuda install location: ${{steps.cuda-toolkit.outputs.CUDA_PATH}}"
