@@ -21,8 +21,14 @@ jobs:
       - if: steps.libtorch-download-cache.outputs.cache-hit != 'true'
         run: Invoke-WebRequest https://download.pytorch.org/libtorch/cu111/libtorch-win-shared-with-deps-1.9.0%2Bcu111.zip -OutFile download/libtorch.zip
 
-      - run: |
-          Expand-Archive -Path download/libtorch.zip -DestinationPath .
+      - uses: actions/cache@v2
+        id: libtorch-unzip-cache
+        with:
+          key: libtorch-unzip-cache
+          path: download/libtorch
+          
+      - if: steps.libtorch-unzip-cache.outputs.cache-hit != 'true'
+        run: Expand-Archive -Path download/libtorch.zip -DestinationPath download/
 
       - run: |
           ls libtorch
