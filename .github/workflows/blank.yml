@@ -10,6 +10,9 @@ jobs:
     runs-on: windows-latest
 
     steps:
+      - uses: actions/checkout@v2
+      - uses: ilammy/msvc-dev-cmd@v1
+      
       - run: mkdir download
       
       - uses: actions/cache@v2
@@ -22,18 +25,12 @@ jobs:
         run: |
           Invoke-WebRequest https://download.pytorch.org/libtorch/cu111/libtorch-win-shared-with-deps-1.9.0%2Bcu111.zip -OutFile download/libtorch.zip
           Expand-Archive -Path download/libtorch.zip -DestinationPath download/
-
-      - run: |
-          ls download/libtorch
-
-#       - uses: actions/checkout@v2
-#       - uses: ilammy/msvc-dev-cmd@v1
       
-#       - name: build
-#         run: |
-#           cmake -DCMAKE_PREFIX_PATH=/absolute/path/to/libtorch .
-#           cmake --build . --config Release
+      - name: build
+        run: |
+          cmake -DCMAKE_PREFIX_PATH=download/libtorch .
+          cmake --build . --config Release
 
-#       - name: run
-#         run: |
-#           Release/check.exe
+      - name: run
+        run: |
+          Release/check.exe
