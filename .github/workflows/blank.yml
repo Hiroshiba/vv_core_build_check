@@ -22,9 +22,11 @@ jobs:
           path: download/libtorch
           
       - if: steps.libtorch-unzip-cache.outputs.cache-hit != 'true'
+        shell: bash
         run: |
-          Invoke-WebRequest https://download.pytorch.org/libtorch/cu111/libtorch-win-shared-with-deps-1.9.0%2Bcu111.zip -OutFile download/libtorch.zip
-          Expand-Archive -Path download/libtorch.zip -DestinationPath download/
+          curl https://download.pytorch.org/libtorch/cu111/libtorch-win-shared-with-deps-1.9.0%2Bcu111.zip \
+            > download/libtorch.zip
+          unzip download/libtorch.zip -d download/
       
       # CUDA
       - uses: Jimver/cuda-toolkit@v0.2.4
