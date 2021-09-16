@@ -52,7 +52,7 @@ jobs:
       - shell: bash
         run: |
           cp -r download/cudnn/cuda/* "${{steps.cuda-toolkit.outputs.CUDA_PATH}}"
-          ls ${{steps.cuda-toolkit.outputs.CUDA_PATH}}
+          ls "${{steps.cuda-toolkit.outputs.CUDA_PATH}}"
 
       # Build
       - uses: ilammy/msvc-dev-cmd@v1
