@@ -11,26 +11,21 @@ jobs:
 
     steps:
       - uses: actions/cache@v2
-        id: cache-libtorch
+        id: download-cache
         with:
-          key: cache-libtorch
-          path: libtorch
+          key: download-cache
+          path: download
 
-#       - if: steps.cache-libtorch.outputs.cache-hit != 'true'
-#         run: |
-#           mkdir libtorch
-#           Invoke-WebRequest https://download.pytorch.org/libtorch/cu111/libtorch-win-shared-with-deps-1.9.0%2Bcu111.zip -OutFile libtorch/libtorch.zip
-#           Expand-Archive -Path libtorch/libtorch.zip -DestinationPath libtorch/
+      - if: steps.download-cache.outputs.cache-hit != 'true'
+        run: |
+          mkdir download
+          Invoke-WebRequest https://download.pytorch.org/libtorch/cu111/libtorch-win-shared-with-deps-1.9.0%2Bcu111.zip -OutFile download/libtorch.zip
 
       - run: |
-          Invoke-WebRequest https://download.pytorch.org/libtorch/cu111/libtorch-win-shared-with-deps-1.9.0%2Bcu111.zip -OutFile libtorch.zip
-          Expand-Archive -Path libtorch.zip -DestinationPath libtorch/
+          Expand-Archive -Path download/libtorch.zip -DestinationPath .
 
       - run: |
           ls libtorch
-          
-      - run: |
-          ls libtorch/*/
 
 #       - uses: actions/checkout@v2
 #       - uses: ilammy/msvc-dev-cmd@v1
