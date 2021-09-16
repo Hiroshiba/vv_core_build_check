@@ -1,0 +1,1 @@
+vv_core_build_check
