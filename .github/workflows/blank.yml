@@ -59,10 +59,10 @@ jobs:
 #           ls "${{steps.cuda-toolkit.outputs.CUDA_PATH}}"
 
       # Build
-      - if: startsWith(${{ matrix.os }}, 'windows')
+      - if: startsWith(${{ matrix.os }}, 'windows') == 'true'
         uses: ilammy/msvc-dev-cmd@v1
       
-      - if: startsWith(${{ matrix.os }}, 'ubuntu')
+      - if: startsWith(${{ matrix.os }}, 'ubuntu') == 'true'
         uses: jwlawson/actions-setup-cmake@v1.9
 
       - name: build
