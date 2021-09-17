@@ -74,9 +74,17 @@ jobs:
         run: ls
           
       # Upload
-      - uses: actions/upload-artifact@v2
+      - if: startsWith(${{ matrix.os }}, 'windows') == 'true'
+        uses: actions/upload-artifact@v2
         with:
-          name: check.exe
-          path: Release/check.exe
+          name: ${{ matrix.os }}-library
+          path: Release/check.dll
+          retention-days: 1
+
+      - if: startsWith(${{ matrix.os }}, 'ubuntu') == 'true'
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ matrix.os }}-library
+          path: libcheck.so
           retention-days: 1
 
