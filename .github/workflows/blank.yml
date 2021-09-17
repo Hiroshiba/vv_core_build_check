@@ -59,21 +59,24 @@ jobs:
 #           ls "${{steps.cuda-toolkit.outputs.CUDA_PATH}}"
 
       # Build
-      - uses: ilammy/msvc-dev-cmd@v1
+      - if: startsWith(${{ matrix.os }}, 'windows')
+        uses: ilammy/msvc-dev-cmd@v1
+      
+      - if: startsWith(${{ matrix.os }}, 'ubuntu')
+        uses: jwlawson/actions-setup-cmake@v1.9
+        
+      - shell: bash
+        run: ls
+
       - name: build
         run: |
           cmake -DCMAKE_PREFIX_PATH=download/libtorch .
           cmake --build . --config Release
-
-      - name: run
-        run: |
-          Release/check.exe
           
       # Upload
       - uses: actions/upload-artifact@v2
         with:
           name: check.exe
-          path: |
-            Release/check.exe
+          path: Release/check.exe
           retention-days: 1
 
