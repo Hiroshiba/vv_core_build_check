@@ -11,7 +11,8 @@ jobs:
       fail-fast: false
       matrix:
         os: [ windows-2019, ubuntu-18.04 ]
-        device: [ gpu, cpu ]
+        # device: [ gpu, cpu ]
+        device: [ gpu ]
         include:
           - os: windows-2019
             library_path: Release/check.dll
@@ -65,6 +66,7 @@ jobs:
         with:
           method: network
           cuda: '11.1.1'
+          sub-packages: '["nvcc_11.1", "cublas_11.1", "cudart_11.1", "cufft_11.1", "curand_11.1", "cusolver_11.1", "cusparse_11.1", "nvrtc_11.1"]'
 
       # CUDNN
       - if: matrix.device == 'gpu'
