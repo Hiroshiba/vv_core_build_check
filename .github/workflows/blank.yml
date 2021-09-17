@@ -64,14 +64,14 @@ jobs:
       
       - if: startsWith(${{ matrix.os }}, 'ubuntu')
         uses: jwlawson/actions-setup-cmake@v1.9
-        
-      - shell: bash
-        run: ls
 
       - name: build
         run: |
           cmake -DCMAKE_PREFIX_PATH=download/libtorch .
           cmake --build . --config Release
+        
+      - shell: bash
+        run: ls
           
       # Upload
       - uses: actions/upload-artifact@v2
