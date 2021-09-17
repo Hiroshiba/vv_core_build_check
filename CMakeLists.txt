@@ -9,11 +9,11 @@ add_library(check SHARED check.cpp)
 target_link_libraries(check "${TORCH_LIBRARIES}")
 set_property(TARGET check PROPERTY CXX_STANDARD 14)
 
-if (MSVC)
-  file(GLOB TORCH_DLLS "${TORCH_INSTALL_PREFIX}/lib/*.dll")
-  add_custom_command(TARGET check
-                     POST_BUILD
-                     COMMAND ${CMAKE_COMMAND} -E copy_if_different
-                     ${TORCH_DLLS}
-                     $<TARGET_FILE_DIR:check>)
-endif (MSVC)
+# if (MSVC)
+#   file(GLOB TORCH_DLLS "${TORCH_INSTALL_PREFIX}/lib/*.dll")
+#   add_custom_command(TARGET check
+#                      POST_BUILD
+#                      COMMAND ${CMAKE_COMMAND} -E copy_if_different
+#                      ${TORCH_DLLS}
+#                      $<TARGET_FILE_DIR:check>)
+# endif (MSVC)
