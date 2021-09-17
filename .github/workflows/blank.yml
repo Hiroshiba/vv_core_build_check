@@ -64,3 +64,12 @@ jobs:
       - name: run
         run: |
           Release/check.exe
+          
+      # Upload
+      - uses: actions/upload-artifact@v2
+        with:
+          name: check.exe
+          path: |
+            Release/check.exe
+          retention-days: 1
+
