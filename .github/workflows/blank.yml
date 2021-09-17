@@ -14,7 +14,7 @@ jobs:
           - os: windows-2019
             library_path: Release/check.dll
           - os: ubuntu-18.04
-            library_path: ubuntu-18.04
+            library_path: libcheck.so
     
     runs-on: ${{ matrix.os }}
 
