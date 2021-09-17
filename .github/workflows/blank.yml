@@ -8,6 +8,7 @@ on:
 jobs:
   build_library:
     strategy:
+      fail-fast: false
       matrix:
         os: [ windows-2019, ubuntu-18.04 ]
         device: [ gpu, cpu ]
@@ -35,8 +36,6 @@ jobs:
           - os: ubuntu-18.04
             device: cpu
             libtorch_url: https://download.pytorch.org/libtorch/cpu/libtorch-cxx11-abi-shared-with-deps-1.9.0%2Bcpu.zip
-        
-        fail-fast: false
     
     runs-on: ${{ matrix.os }}
 
