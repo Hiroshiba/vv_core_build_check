@@ -68,10 +68,13 @@ jobs:
             > download/cudnn.tgz
           mkdir download/cudnn && tar -xf download/cudnn.tgz -C download/cudnn
 
-      - shell: bash
-        run: |
-          cp -r download/cudnn/cuda/* "${{steps.cuda-toolkit.outputs.CUDA_PATH}}"
-          ls "${{steps.cuda-toolkit.outputs.CUDA_PATH}}"
+      - if: startsWith(matrix.os, 'windows')
+        shell: bash
+        run: cp -r download/cudnn/cuda/* "${{steps.cuda-toolkit.outputs.CUDA_PATH}}"
+
+      - if: startsWith(matrix.os, 'ubuntu')
+        shell: bash
+        run: sudo cp -r download/cudnn/cuda/* "${{steps.cuda-toolkit.outputs.CUDA_PATH}}"
 
       # Build
       - if: startsWith(matrix.os, 'windows')
