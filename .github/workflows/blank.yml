@@ -18,7 +18,7 @@ jobs:
             library_path: Release/check.dll
 
           - os: macos-10.15
-            src_library_path: libcheck.dylib
+            library_path: libcheck.dylib
 
           - os: ubuntu-18.04
             library_path: libcheck.so
